@@ -1,4 +1,3 @@
-import { useReducer } from 'react';
 import {
   UPDATE_PRODUCTS,
   ADD_TO_CART,
@@ -11,19 +10,27 @@ import {
   TOGGLE_CART,
 } from './actions';
 
-export const reducer = (state, action) => {
+const initalState = {
+  products: [],
+  categories: [],
+  currentCategory: "",
+  cart: [],
+  cartOpen: false
+};
+
+export default function reducer(state = initalState, action) {
   switch (action.type) {
     case UPDATE_PRODUCTS:
       return {
         ...state,
-        products: [...action.products],
+        products: [...action.products]
       };
 
     case ADD_TO_CART:
       return {
         ...state,
         cartOpen: true,
-        cart: [...state.cart, action.product],
+        cart: [...state.cart, action.product]
       };
 
     case ADD_MULTIPLE_TO_CART:
@@ -40,7 +47,7 @@ export const reducer = (state, action) => {
             product.purchaseQuantity = action.purchaseQuantity;
           }
           return product;
-        }),
+        })
       };
 
     case REMOVE_FROM_CART:
@@ -51,39 +58,35 @@ export const reducer = (state, action) => {
       return {
         ...state,
         cartOpen: newState.length > 0,
-        cart: newState,
+        cart: newState
       };
 
     case CLEAR_CART:
       return {
         ...state,
         cartOpen: false,
-        cart: [],
+        cart: []
       };
 
     case TOGGLE_CART:
       return {
         ...state,
-        cartOpen: !state.cartOpen,
+        cartOpen: !state.cartOpen
       };
 
     case UPDATE_CATEGORIES:
       return {
         ...state,
-        categories: [...action.categories],
+        categories: [...action.categories]
       };
 
     case UPDATE_CURRENT_CATEGORY:
       return {
         ...state,
-        currentCategory: action.currentCategory,
+        currentCategory: action.currentCategory
       };
 
     default:
       return state;
   }
 };
-
-export function useProductReducer(initialState) {
-  return useReducer(reducer, initialState);
-}
