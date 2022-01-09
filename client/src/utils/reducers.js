@@ -12,10 +12,10 @@ import {
 
 const initalState = {
   products: [],
-  categories: [],
-  currentCategory: "",
   cart: [],
-  cartOpen: false
+  cartOpen: false,
+  categories: [],
+  currentCategory: ""
 };
 
 export default function reducer(state = initalState, action) {
